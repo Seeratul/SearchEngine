@@ -5,27 +5,29 @@ from whoosh.index import open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
 import time
-
+from funcs import saver
 #for setup
 prefix = 'https://vm009.rz.uos.de/crawl/'
 start_url = prefix+'index.html'
 agenda = [start_url]
-ix = open_dir("indexdir")
-schema = Schema(url =TEXT(stored=True))
+#ix = open_dir("indexdir")
+schema = Schema(url =TEXT(stored=True),title = TEXT, body = TEXT)
 ix = create_in("indexdir", schema)
 
 
 while agenda:
     url = agenda.pop()  
     print("Get ",url)
+   
     #time.sleep(2)
     r = requests.get(url)
     print(r, r.encoding)
     if r.status_code == 200:
-        writer = ix.writer()
-        writer.add_document(url = url) 
-        writer.commit()
+        # writer = ix.writer()
+        # writer.add_document(url = url) 
+        # writer.commit()
         soup = bs(r.text,features= "lxml")
+        saver(soup,ix,url)
 
         for link in soup.find_all('a'):
             string = link.get('href')
