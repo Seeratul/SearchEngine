@@ -4,9 +4,9 @@
         <title>ReverseApp</title>
     </head>
     <body>
-        <h1>Reversed</h1>
+        <h1>Results</h1>
         {%for i in range (len)%}
-        <a href={{rev[i+1]}}>Link {{i}}</a>
+        <a href={{rev[i+1][0]}}>{{rev[i+1][1]}}</a>
         {% endfor %}
     </body>
 </html>

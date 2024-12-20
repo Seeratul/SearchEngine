@@ -11,7 +11,7 @@ prefix = 'https://vm009.rz.uos.de/crawl/'
 start_url = prefix+'index.html'
 agenda = [start_url]
 #ix = open_dir("indexdir")
-schema = Schema(url =TEXT(stored=True),title = TEXT, body = TEXT)
+schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = TEXT)
 ix = create_in("indexdir", schema)
 
 

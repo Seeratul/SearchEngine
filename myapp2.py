@@ -24,7 +24,7 @@ def search():
             results = searcher.search(query)
             print(results[0])
             for i in range(len(results)):
-                urls.append(results[i]["url"])
+                urls.append([results[i]["url"],[results[i]["title"]]])
                 print(urls[i])
             #query = "a"
         # print all results
