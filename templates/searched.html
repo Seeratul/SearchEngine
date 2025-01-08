@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ReverseApp</title>
+        <title>Candelreply</title>
     </head>
     <body>
         <h1>Results</h1>
+        {%if (len)> 0%}
         {%for i in range (len)%}
-        <a href={{rev[i+1][0]}}>{{rev[i+1][1]}}</a>
+        <br />
+        <a href={{rev[i+1][0]}}>{{rev[i+1][1]}}</a> 
+        <br />
+        <p>{{rev[i+1][2]}}</p>
         {% endfor %}
+        {% else %}
+        <p>Sadly no results matching your query were found</p>
+        {% endif %}
     </body>
 </html>

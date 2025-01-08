@@ -4,16 +4,27 @@ from whoosh.index import create_in
 from whoosh.index import open_dir
 from whoosh.fields import *
 from whoosh.qparser import QueryParser
-import time
-from funcs import saver
-#for setup
+#from funcs import saver
+
+
+#for setup we use simple presets they are inelegant but they do the job
 prefix = 'https://vm009.rz.uos.de/crawl/'
 start_url = prefix+'index.html'
 agenda = [start_url]
-#ix = open_dir("indexdir")
-schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = TEXT)
+#We create the schema in which woosh will store data
+schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = TEXT,excerpt =TEXT(stored=True))
 ix = create_in("indexdir", schema)
 
+#we 
+def saver(soup,index,url):
+    title = soup.html.title.text
+    body = soup.html.p.text
+    writer = index.writer()
+    excerpt =  soup.html.p.text
+    excerpt = excerpt[0:50]
+    writer.add_document(url = url,title= title, body = body+" "+title, excerpt = excerpt) 
+    writer.commit()
+    return
 
 while agenda:
     url = agenda.pop()  

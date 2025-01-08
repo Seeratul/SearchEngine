@@ -22,11 +22,12 @@ def search():
         # find entries with the words 'first' AND 'last'
             query = QueryParser("body", ix.schema).parse(request.args["q"])
             results = searcher.search(query)
-            print(results[0])
+            #print(results[0])
             for i in range(len(results)):
-                urls.append([results[i]["url"],[results[i]["title"]]])
-                print(urls[i])
+                urls.append([results[i]["url"],[results[i]["title"]],[results[i]["excerpt"]]])
+                #print(urls[i])
             #query = "a"
         # print all results
+        print(len)
         return render_template("searched.html", rev= urls, len = len(results))
 
