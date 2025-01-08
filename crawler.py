@@ -15,52 +15,55 @@ agenda = [start_url]
 schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = TEXT,excerpt =TEXT(stored=True))
 ix = create_in("indexdir", schema)
 
-#we 
+#Predefine saver to help with code legibility
 def saver(soup,index,url):
+    #Extract and cut to size various parts of the soup
     title = soup.html.title.text
     body = soup.html.p.text
     writer = index.writer()
     excerpt =  soup.html.p.text
     excerpt = excerpt[0:50]
+    #Save the extracted parts
     writer.add_document(url = url,title= title, body = body+" "+title, excerpt = excerpt) 
     writer.commit()
     return
 
+#Loop for as long as there is something on the agenda
 while agenda:
+
+    #Grab the top object from the agenda
     url = agenda.pop()  
-    print("Get ",url)
-   
-    #time.sleep(2)
+    #Create a requests object
     r = requests.get(url)
-    print(r, r.encoding)
+ 
+    #Check wheter the target page is reachable
     if r.status_code == 200:
-        # writer = ix.writer()
-        # writer.add_document(url = url) 
-        # writer.commit()
+        
+        #Extracts the soup from the page and saves it into our woosh library
         soup = bs(r.text,features= "lxml")
         saver(soup,ix,url)
 
+        #look for further links to crawl
         for link in soup.find_all('a'):
             string = link.get('href')
-            #move out string analyzer
+
+            #ensusure found links are html links
             if ".html" in string:
-                
+
+                #ensures that links with and without the proper prefix get added
                 if prefix in string:
                     newurl = string
                 else:
                     newurl= prefix+string
 
+                #Checks wheter the link already as been visited or is alredy in agenda
                 query = QueryParser("url", ix.schema).parse(string)
                 with ix.searcher() as searcher:
                     results = searcher.search(query)
                 if len(results) == 0:
                     if (newurl in agenda)== False:
-                        print(string)
                         agenda.append(newurl)
-query = QueryParser("url", ix.schema).parse("https")
-with ix.searcher() as searcher:
-    results = searcher.search(query)
-    print(len(results))
-    print(results)
+
+
 
             
