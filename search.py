@@ -7,7 +7,7 @@ ix = index.open_dir("indexdir")
 
 # Retrieving data
 
-#flask --app myapp2 run
+#flask --app search run
 
 app = Flask(__name__)
 
