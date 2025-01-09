@@ -5,6 +5,9 @@ Quickstart:
     navigate to the site given
     enter your query
 
+For server use:
+    line 7 in search.py is a local path so if you download SearchEngine from git in its folder
+    line 7 needs to be "ix = index.open_dir("SearchEngine/indexdir")" instead of ix = index.open_dir("indexdir") 
 
 Features:
     A simple crawler that can:
