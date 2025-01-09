@@ -20,19 +20,19 @@ def start():
 #search page
 @app.route("/search")
 def search():
-        #Instantiate hits
-        hits = [""]
-        #open the searcher
-        with ix.searcher() as searcher:
+    #Instantiate hits
+    hits = [""]
+    #open the searcher
+    with ix.searcher() as searcher:
 
-        # find entries containing the query
-            print(type("q"))
-            query = QueryParser("body", ix.schema).parse(request.args["q"])
-            results = searcher.search(query)
-            #extract data from the individual results while iterating over them
-            for i in range(len(results)):
-                hits.append([results[i]["url"],[results[i]["title"]],[results[i]["excerpt"]]])
-                
-        #Hand the extratcted data over to the template
-        return render_template("searched.html", rev= hits, len = len(results))
+    # find entries containing the query
+        print(type("q"))
+        query = QueryParser("body", ix.schema).parse(request.args["q"])
+        results = searcher.search(query)
+        #extract data from the individual results while iterating over them
+        for i in range(len(results)):
+            hits.append([results[i]["url"],[results[i]["title"]],[results[i]["excerpt"]]])
+            
+    #Hand the extratcted data over to the template
+    return render_template("searched.html", rev= hits, len = len(results))
 
