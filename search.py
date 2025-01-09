@@ -26,6 +26,7 @@ def search():
         with ix.searcher() as searcher:
 
         # find entries containing the query
+            print(type("q"))
             query = QueryParser("body", ix.schema).parse(request.args["q"])
             results = searcher.search(query)
             #extract data from the individual results while iterating over them

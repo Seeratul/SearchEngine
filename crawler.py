@@ -12,7 +12,7 @@ prefix = 'https://vm009.rz.uos.de/crawl/'
 start_url = prefix+'index.html'
 agenda = [start_url]
 #We create the schema in which woosh will store data
-schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = TEXT,excerpt =TEXT(stored=True))
+schema = Schema(url =TEXT(stored=True),title = TEXT(stored=True), body = KEYWORD,excerpt =TEXT(stored=True))
 ix = create_in("indexdir", schema)
 
 #Predefine saver to help with code legibility
@@ -60,6 +60,7 @@ while agenda:
                 query = QueryParser("url", ix.schema).parse(string)
                 with ix.searcher() as searcher:
                     results = searcher.search(query)
+                    
                 if len(results) == 0:
                     if (newurl in agenda)== False:
                         agenda.append(newurl)
