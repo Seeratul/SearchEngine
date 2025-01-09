@@ -3,17 +3,19 @@
     <head>
         <title>Candelreply</title>
     </head>
-    <body>
-        <h1>Results</h1>
-        {%if (len)> 0%}
-        {%for i in range (len)%}
-        <br />
-        <a href={{rev[i+1][0]}}>{{rev[i+1][1]}}</a> 
-        <br />
-        <p>{{rev[i+1][2]}}</p>
-        {% endfor %}
-        {% else %}
-        <p>Sadly no results matching your query were found. I would like to mention that currently we only take full word queries like "Page","Platypus" or numbers like "1" and we care about capitilization. </p>
-        {% endif %}
-    </body>
+    <center>
+        <body>
+            <h1>Results</h1>
+            {%if (len)> 0%}
+            {%for i in range (len)%}
+            <br />
+            <a href={{rev[i+1][0]}}>{{rev[i+1][1]}}</a> 
+            <br />
+            <p>{{rev[i+1][2]}}</p>
+            {% endfor %}
+            {% else %}
+            <p>Sadly no results matching your query were found. I would like to mention that currently we only take full word queries like "Page","Platypus" or numbers like "1" and we care about capitilization. </p>
+            {% endif %}
+        </body>
+    </center>
 </html>
